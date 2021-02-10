@@ -11675,6 +11675,32 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   padding: 3rem 1.5rem 6rem;
 }
 
+.columns.is-all-white .column > * {
+  color: white !important;
+}
+
+.has-line-left {
+  position: relative;
+}
+
+.has-line-left::after {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 80%;
+  width: 3px;
+  background-color: #AD7116;
+  border-radius: 2px;
+}
+
+@media screen and (max-width: 768px) {
+  .has-line-left::after {
+    display: none;
+  }
+}
+
 .button.is-transparent {
   background-color: transparent;
 }
@@ -11696,6 +11722,14 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
 
 .navbar .navbar-end hr {
   margin: .5rem 0;
+}
+
+.homepage {
+  background-color: #E4E3E2;
+}
+
+.panel.is-background-white {
+  background-color: white;
 }
 
 .glide {
@@ -11746,6 +11780,27 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
     opacity: 1;
     transform: translate(-50%, -50%);
   }
+}
+
+.hero.has-background {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-background {
+  position: absolute;
+  object-fit: cover;
+  object-position: center center;
+  width: 100%;
+  height: 100%;
+}
+
+.hero-body {
+  z-index: 1;
+}
+
+.hero-body > * {
+  color: white !important;
 }
 
 footer.footer {

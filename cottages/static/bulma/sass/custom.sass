@@ -1,5 +1,29 @@
 @import "./node_modules/bulma/sass/utilities/initial-variables"
 // Custom styles
+$background-homepage: #E4E3E2
+
+.columns.is-all-white
+  & .column
+    & > *
+      color: white !important
+
+//Line-left
+.has-line-left
+  position: relative
+
+  &::after
+    content: ""
+    position: absolute
+    left: 0px
+    top: 50%
+    transform: translateY(-50%)
+    height: 80%
+    width: 3px
+    background-color: $primary
+    border-radius: 2px
+
+    @media screen and (max-width: 768px)
+      display: none
 
 
 // IsTransparent Button
@@ -30,6 +54,14 @@
 
     & hr
       margin: .5rem 0
+
+// Homepage
+
+.homepage
+  background-color: $background-homepage
+
+.panel.is-background-white
+  background-color: white
 
 // Homepage Slider
 
@@ -70,6 +102,23 @@
   100%
     opacity: 1
     transform: translate(-50%, -50%)
+
+
+// About page
+.hero
+  &.has-background
+    position: relative
+    overflow: hidden
+  &-background
+    position: absolute
+    object-fit: cover
+    object-position: center center
+    width: 100%
+    height: 100%
+  &-body
+    z-index: 1
+    & > *
+      color: white !important
 
 
 // Footer
