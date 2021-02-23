@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bulma_tags %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static "css/glide.core.min.css" %}" />
+<link rel="stylesheet" href="{% static "css/glide.theme.min.css" %}"  />
+{% endblock %}
+
+{% block title %}
+{{ cottage.name }}
+{% endblock %}
+
+
+{% block content %}
+<section class="section homepage">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-two-thirds is-flex is-align-items-center cottage-images">
+
+                <div class="glide glide-mobile">
+                  <div class="glide__track" data-glide-el="track">
+                    <ul class="glide__slides">
+
+                        {% for image in images %}
+
+                              <li class="glide__slide">
+                              <a data-fslightbox href="{{ image.image.url }}">
+                                  <img src="{{ image.image.url }}" alt="{{ cottage.name }}">
+                                  </a>
+                              </li>
+
+                        {% endfor %}
+
+                    </ul>
+                  </div>
+
+                  <div class="glide__arrows" data-glide-el="controls">
+                      {% if images.count > 1 %}
+                    <button class="glide__arrow glide__arrow--left" data-glide-dir="<"><span class="icon"><i class="fas fa-arrow-left"></i></span></button>
+                    <button class="glide__arrow glide__arrow--right" data-glide-dir=">"><span class="icon"><i class="fas fa-arrow-right"></i></span></button>
+                  {% endif %}
+                  </div>
+                </div>
+
+
+
+            </div>
+            <div class="column is-flex is-flex-direction-column is-justify-content-center">
+                <h1 class="is-size-2 has-text-primary is-uppercase has-text-weight-bold">
+                    {{ cottage.name }}
+                </h1>
+                <h2 class="is-size-4">Wymiary</h2>
+                <p>Długość: <span class="has-text-">{{ cottage.length }}cm</span></p>
+                <p>Szerokość: {{ cottage.width }}cm</p>
+                <p>Wysokość: {{ cottage.height }}cm</p>
+
+                <h2 class="is-size-4">Powierzchnia</h2>
+                <p>Podłogi: {{ cottage.floor_area }}m&#178;</p>
+                <p>Dachu: {{ cottage.roof_area }}m&#178;</p>
+                {% if cottage.terrace_area %}
+                <p>Tarasu: {{ cottage.terrace_area }}m&#178;</p>
+                {% endif %}
+
+                <h2 class="is-size-4">Inne</h2>
+                <p>Ilość pomieszczeń: {{ cottage.number_of_rooms }}</p>
+                <p>Rodzaj konstrukcji: {{ cottage.construction.name }}</p>
+                <hr>
+                <p class="is-size-3">Cena: <span class="has-text-primary price">{{ cottage.price }}</span>zł</p>
+                <p class="is-size-7">Przybliżona cena wraz z wybranymi dodatkowymi opcjami</p>
+                <button class="button is-primary mt-5" id="optional-services">Dodatkowe usługi</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <div class="modal">
+            <div class="modal-background"></div>
+              <div class="modal-card">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Dodatkowe opcje</p>
+                  <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                    <div class="is-flex is-flex-direction-column">
+
+                    {% for optional in cottage.optionalservice_set.all %}
+
+                        <input type="checkbox" name="{{ optional.name }}" id="{{ optional.name }}" form="contact-form" class="is-checkradio optional-checkbox">
+                        <label class="optional-field" for="{{ optional.name }}">
+                            <span class="optional-name">{{ optional.get_name_display }}</span>
+                            <span class="optional-price">{{ optional.price }}zł</span>
+                        </label>
+
+                    {% endfor %}
+
+                    </div>
+            </section>
+          </div>
+        </div>
+
+
+    <section class="section">
+        <div class="container">
+            <h2 class="is-size-2 has-text-primary has-text-centered">Opis</h2>
+            <div>
+                {{ cottage.description|safe }}
+            </div>
+        </div>
+    </section>
+
+
+    <section class="section homepage is-flex is-justify-content-center">
+
+        <div class="p-4 max-width">
+            <h2 class="is-size-2 has-text-primary has-text-centered">
+                Dowiedz się więcej
+            </h2>
+            <p class="has-text-justified">Masz pytanie? Chcesz się skontaktować w sprawie domku? Skorzystaj z formularza kontaktowego, a nasza obsługa odezwie się najszybciej jak tylko możliwe.</p>
+            <br>
+            <form action="" method="post" class="is-flex is-flex-direction-column" id="contact-form">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <input type="hidden" id="id_form-price" name="form-price">
+                <input type="submit" value="Wyślij" class="button is-primary has-text-centered">
+            </form>
+        </div>
+
+    </section>
+{% endblock %}
+
+
+
+{% block javascript %}
+
+    <script src="{% static "js/glide.min.js" %}"></script>
+    <script>
+        new Glide('.glide').mount()
+    </script>
+    <script src="{% static "js/fslightbox.js" %}"></script>
+
+
+    <script>
+        const priceElement = document.querySelector('.price')
+        const checkboxes = document.querySelectorAll('.optional-checkbox')
+        const formPrice = document.querySelector('#id_form-price')
+
+        let price = formPrice.value || parseFloat({{ cottage.price }});
+
+        window.onload = () => {
+            checkboxes.forEach(checkbox => {
+            const optionPrice = parseFloat(checkbox.nextElementSibling.querySelector('.optional-price').innerHTML)
+            if (checkbox.checked){
+                    price += optionPrice;
+                }
+                priceElement.innerHTML = price.toFixed(2);
+            checkbox.addEventListener('change', e => {
+                const isCheckedTarget = e.target.checked;
+                if (isCheckedTarget){
+                    price += optionPrice;
+                } else {
+                    price -= optionPrice;
+                }
+                formPrice.value = price;
+                priceElement.innerHTML = price.toFixed(2);
+            })
+        })
+        }
+
+
+
+    </script>
+
+    <script>
+        const services = document.getElementById('optional-services')
+        const modal = document.querySelector('.modal')
+        const background = document.querySelector('.modal-background')
+        const close = document.querySelector('.delete')
+
+        const toogleModal = () => {
+            modal.classList.toggle('is-active')
+        }
+
+        services.addEventListener('click', toogleModal)
+        background.addEventListener('click', toogleModal)
+        close.addEventListener('click', toogleModal)
+    </script>
+{% endblock %}

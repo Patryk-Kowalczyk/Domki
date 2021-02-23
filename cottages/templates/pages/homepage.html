@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load thumbnail %}
 {% block title %} Strona główna {% endblock %}
 
 {% block head %}
@@ -31,127 +32,117 @@
 
     <section class="section homepage">
         <div class="columns">
+            <article class="panel is-primary column is-one-quarter has-background-white">
+                <form method="get" action=".">
+              <p class="panel-heading">
+                Wyszukaj
+              </p>
+              <div class="panel-block is-flex is-flex-direction-column">
+              <h3 class="is-size-6">Typ konstrukcji</h3>
+                <div class="select is-multiple">
+                  <select multiple size="2" name="constructions">
+                      {% for construction in constructions %}
+                        <option value="{{ construction.name }}">{{ construction.name }}</option>
+                      {% endfor %}
+                  </select>
+                </div>
+              </div>
 
-            <article class="panel is-primary column has-background-white">
-  <p class="panel-heading">
-    Primary
-  </p>
-  <p class="panel-tabs">
-    <a class="is-active">All</a>
-    <a>Public</a>
-    <a>Private</a>
-    <a>Sources</a>
-    <a>Forks</a>
-  </p>
-  <div class="panel-block">
-    <p class="control has-icons-left">
-      <input class="input is-primary" type="text" placeholder="Search">
-      <span class="icon is-left">
-        <i class="fas fa-search" aria-hidden="true"></i>
-      </span>
-    </p>
-  </div>
-  <a class="panel-block is-active">
-    <span class="panel-icon">
-      <i class="fas fa-book" aria-hidden="true"></i>
-    </span>
-    bulma
-  </a>
-  <a class="panel-block">
-    <span class="panel-icon">
-      <i class="fas fa-book" aria-hidden="true"></i>
-    </span>
-    marksheet
-  </a>
-  <a class="panel-block">
-    <span class="panel-icon">
-      <i class="fas fa-book" aria-hidden="true"></i>
-    </span>
-    minireset.css
-  </a>
-  <a class="panel-block">
-    <span class="panel-icon">
-      <i class="fas fa-book" aria-hidden="true"></i>
-    </span>
-    jgthms.github.io
-  </a>
-</article>
-            <div class="column">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="content">
-                            <h3>Domek 1</h3>
-                                <p>
-                                    Greyhound hello coldly wonderfully marginally
-                                </p>
-                        </div>
-                    </div>
+              <div class="panel-block is-flex is-flex-direction-column">
+                <h3 class="is-size-6">Powierzchnia [m&#178;]</h3>
+                  <div class="is-flex is-align-items-center">
+                      <input name="floor_area" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ floor_area.min }}" max="{{ floor_area.max }}" value="{{ floor_area.max }}" step="1" type="range">
+                      <output for="sliderWithValue">{{ floor_area.max }}</output>
+                  </div>
+              </div>
+
+              <div class="panel-block is-flex is-flex-direction-column">
+               <h3 class="is-size-6">Dodatkowa zabudowa</h3>
+                <div class="select is-multiple">
+                  <select multiple size="2" name="additionals">
+                      {% for additional in additionals %}
+                        <option value="{{ additional.name }}">{{ additional.name }}</option>
+                      {% endfor %}
+                  </select>
                 </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="content">
-                            <h3>Domek 1</h3>
-                                <p>
-                                    Greyhound hello coldly wonderfully marginally
-                                </p>
-                        </div>
-                    </div>
+              </div>
+
+              <div class="panel-block is-flex is-flex-direction-column">
+                <h3 class="is-size-6">Wysokość [cm]</h3>
+                  <div class="is-flex is-align-items-center">
+                      <input name="floor_area" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ height.min }}" max="{{ height.max }}" value="{{ height.max }}" step="20" type="range">
+                      <output for="sliderWithValue">{{ height.max }}</output>
+                  </div>
+              </div>
+
+              <div class="panel-block is-flex is-flex-direction-column is-justify-content-center">
+                  <input type="checkbox" name="terrace" id="terrace" class="is-checkradio optional-checkbox is-vertical-aligned">
+                  <label for="terrace">Z tarasem</label>
+              </div>
+
+              <div class="panel-block is-flex is-flex-direction-column is-justify-content-center">
+                  <h3 class="is-size-6">Ilość pokoi</h3>
+                  <div class="select">
+                    <select name="rooms">
+                        <option value="Dowolna">Dowolna</option>
+                        <option value="1">1</option>
+                        <option value="2-3">2-3</option>
+                        <option value="Więcej">Więcej</option>
+                    </select>
                 </div>
-            </div>
-            <div class="column">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="content">
-                            <h3>Domek 1</h3>
-                                <p>
-                                    Greyhound hello coldly wonderfully marginally
-                                </p>
+              </div>
+
+
+
+                    <input type="submit" value="Szukaj" class="button is-primary">
+                </form>
+            </article>
+        <div class="column">
+            <div class="columns">
+                {% for cottage in cottages %}
+                    <a class="column is-one-quarter" href="{{ cottage.get_absolute_url }}">
+                        <div>
+                            <div class="card">
+                                <div class="card-image">
+                                    <figure class="image is-4by3">
+                                        {% thumbnail cottage.cottage_photos.first.image "200x150" crop="center" as im %}
+                                            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+                                        {% endthumbnail %}
+                                    </figure>
+                                  </div>
+                                <div class="card-content">
+                                    <div class="content">
+                                        <h3>{{ cottage.name }}</h3>
+                                            <p>
+                                                {{ cottage.description|truncatewords:15|safe }}
+                                            </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+                    </a>
+                {% endfor %}
             </div>
-            <div class="column">
-                <div class="card">
-                    <div class="card-image">
-                        <figure class="image is-4by3">
-                          <img src="https://bulma.io/images/placeholders/1280x960.png" alt="Placeholder image">
-                        </figure>
-                      </div>
-                    <div class="card-content">
-                        <div class="content">
-                            <h3>Domek 1</h3>
-                                <p>
-                                    Greyhound hello coldly wonderfully marginally
-                                </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
+
         </div>
     </section>
 {% endblock %}
 
 
 {% block javascript %}
+    <script>
+        const sliders = document.querySelectorAll('.slider');
+
+        sliders.forEach( slider => {
+            slider.addEventListener('input', () => {
+                slider.nextElementSibling.innerHTML = slider.value
+            })
+        })
+    </script>
     <script src="{% static "js/glide.min.js" %}"></script>
     <script>
         new Glide('.glide').mount()
     </script>
+
 {% endblock %}

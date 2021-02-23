@@ -6,7 +6,10 @@
   },
   "description": "Bulma for Django",
   "dependencies": {
-    "bulma": "^0.9.2"
+    "bulma": "^0.9.2",
+    "bulma-checkradio": "^1.1.1",
+    "bulma-extensions": "^6.2.7",
+    "bulma-slider": "^2.0.4"
   },
   "devDependencies": {
     "autoprefixer": "^9.8.0",

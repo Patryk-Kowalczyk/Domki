@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'bulma',
     'core',
     'tinymce',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
