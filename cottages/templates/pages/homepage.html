@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load thumbnail %}
+{% load customtags %}
 {% block title %} Strona główna {% endblock %}
 
 {% block head %}
@@ -32,75 +33,77 @@
 
     <section class="section homepage">
         <div class="columns">
-            <article class="panel is-primary column is-one-quarter has-background-white">
-                <form method="get" action=".">
+         <div class="column is-one-quarter">
+            <article class="panel is-primary has-background-white">
+                <form method="get" action="." class="is-flex is-flex-direction-column">
               <p class="panel-heading">
                 Wyszukaj
               </p>
               <div class="panel-block is-flex is-flex-direction-column">
               <h3 class="is-size-6">Typ konstrukcji</h3>
-                <div class="select is-multiple">
+                <div class="select is-multiple is-fullwidth">
                   <select multiple size="2" name="constructions">
                       {% for construction in constructions %}
-                        <option value="{{ construction.name }}">{{ construction.name }}</option>
+                        <option value="{{ construction.name }}" {% if construction.name in params|get:"constructions" %} selected {% endif %}>{{ construction.name }}</option>
                       {% endfor %}
                   </select>
                 </div>
               </div>
 
-              <div class="panel-block is-flex is-flex-direction-column">
-                <h3 class="is-size-6">Powierzchnia [m&#178;]</h3>
+              <div class="panel-block is-flex is-flex-direction-column is-align-items-stretch">
+                <h3 class="is-size-6 is-align-self-center">Powierzchnia do [m&#178;]</h3>
                   <div class="is-flex is-align-items-center">
-                      <input name="floor_area" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ floor_area.min }}" max="{{ floor_area.max }}" value="{{ floor_area.max }}" step="1" type="range">
-                      <output for="sliderWithValue">{{ floor_area.max }}</output>
+                      <input name="floor_area" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ floor_area.min }}" max="{{ floor_area.max }}" value="{% if params|get:"floor_area" %}{{ params|get:"floor_area"}}{% else %}{{ floor_area.max }}{% endif %}" step="1" type="range">
+                      <output for="sliderWithValue">{% if params|get:"floor_area" %}{{ params|get:"floor_area"}}{% else %}{{ floor_area.max }}{% endif %}</output>
                   </div>
               </div>
 
               <div class="panel-block is-flex is-flex-direction-column">
                <h3 class="is-size-6">Dodatkowa zabudowa</h3>
-                <div class="select is-multiple">
+                <div class="select is-multiple is-fullwidth">
                   <select multiple size="2" name="additionals">
                       {% for additional in additionals %}
-                        <option value="{{ additional.name }}">{{ additional.name }}</option>
+                        <option value="{{ additional.name }}" {% if additional.name in params|get:"additionals" %} selected {% endif %}>{{ additional.name }}</option>
                       {% endfor %}
                   </select>
                 </div>
               </div>
 
-              <div class="panel-block is-flex is-flex-direction-column">
-                <h3 class="is-size-6">Wysokość [cm]</h3>
+              <div class="panel-block is-flex is-flex-direction-column is-align-items-stretch">
+                <h3 class="is-size-6 is-align-self-center">Wysokość do [cm]</h3>
                   <div class="is-flex is-align-items-center">
-                      <input name="floor_area" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ height.min }}" max="{{ height.max }}" value="{{ height.max }}" step="20" type="range">
-                      <output for="sliderWithValue">{{ height.max }}</output>
+                      <input name="height" id="sliderWithValue" class="slider has-output is-fullwidth" min="{{ height.min }}" max="{{ height.max }}" value="{% if params|get:"floor_area" %}{{ params|get:"height"}}{% else %}{{ height.max }}{% endif %}" step="20" type="range">
+                      <output for="sliderWithValue">{% if params|get:"floor_area" %}{{ params|get:"height"}}{% else %}{{ height.max }}{% endif %}</output>
                   </div>
               </div>
 
               <div class="panel-block is-flex is-flex-direction-column is-justify-content-center">
-                  <input type="checkbox" name="terrace" id="terrace" class="is-checkradio optional-checkbox is-vertical-aligned">
+                  <input type="checkbox" name="terrace" id="terrace" class="is-checkradio optional-checkbox is-vertical-aligned" {% if params|get:"terrace" %} checked{% endif %}>
                   <label for="terrace">Z tarasem</label>
               </div>
 
               <div class="panel-block is-flex is-flex-direction-column is-justify-content-center">
                   <h3 class="is-size-6">Ilość pokoi</h3>
-                  <div class="select">
+                  <div class="select is-fullwidth">
                     <select name="rooms">
-                        <option value="Dowolna">Dowolna</option>
-                        <option value="1">1</option>
-                        <option value="2-3">2-3</option>
-                        <option value="Więcej">Więcej</option>
+                        <option value="Dowolna" {% if params|get:"rooms" == "Dowolna" %} selected {% endif %}>Dowolna</option>
+                        <option value="1" {% if params|get:"rooms" == "1" %} selected {% endif %}>1</option>
+                        <option value="2-3" {% if params|get:"rooms" == "2-3" %} selected {% endif %}>2-3</option>
+                        <option value="Więcej" {% if params|get:"rooms" == "Więcej" %} selected {% endif %}>Więcej</option>
                     </select>
                 </div>
               </div>
 
 
 
-                    <input type="submit" value="Szukaj" class="button is-primary">
+                    <input type="submit" value="Szukaj" class="button is-primary mt-3">
                 </form>
             </article>
+         </div>
         <div class="column">
-            <div class="columns">
+            <div class="columns is-multiline">
                 {% for cottage in cottages %}
-                    <a class="column is-one-quarter" href="{{ cottage.get_absolute_url }}">
+                    <a class="column is-one-quarter-desktop is-one-third-tablet" href="{{ cottage.get_absolute_url }}">
                         <div>
                             <div class="card">
                                 <div class="card-image">
@@ -123,6 +126,31 @@
                     </a>
                 {% endfor %}
             </div>
+        <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+            {% if cottages.has_previous %}
+                <a class="pagination-previous" href="?{% url_replace request 'page' cottages.previous_page_number %}">Poprzednia strona</a>
+            {% endif %}
+            {% if cottages.has_next %}
+                <a class="pagination-next" href="?{% url_replace request 'page' cottages.next_page_number %}">Następna strona</a>
+            {% endif %}
+          <ul class="pagination-list">
+            {% if cottages.has_previous %}
+            <li><a class="pagination-link" aria-label="Goto page 1" href="?{% url_replace request 'page' 1 %}">1</a></li>
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+            {% endif %}
+            {% if cottages.has_previous %}
+              <li><a class="pagination-link" aria-label="Goto page {{ cottages.previous_page_number }}" href="?{% url_replace request 'page' cottages.previous_page_number %}">{{ cottages.previous_page_number }}</a></li>
+            {% endif %}
+            <li><a class="pagination-link is-current" aria-label="Page 46" aria-current="page">{{ cottages.number }}</a></li>
+            {% if cottages.has_next %}
+              <li><a class="pagination-link" aria-label="Goto page {{ cottages.next_page_number }}" href="?{% url_replace request 'page' cottages.next_page_number %}">{{ cottages.next_page_number }}</a></li>
+            {% endif %}
+            {% if cottages.has_next %}
+            <li><span class="pagination-ellipsis">&hellip;</span></li>
+            <li><a class="pagination-link" aria-label="Goto page {{ cottages.paginator.num_pages }}" href="?{% url_replace request 'page' cottages.paginator.num_pages %}">{{ cottages.paginator.num_pages }}</a></li>
+            {% endif %}
+          </ul>
+        </nav>
         </div>
 
         </div>

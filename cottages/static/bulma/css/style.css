@@ -13688,6 +13688,12 @@ input[type="range"].slider.is-danger .has-output-tooltip + output {
   transform: translateY(-60%) rotate(45deg) !important;
 }
 
+.pagination-previous,
+.pagination-next,
+.pagination-link {
+  background-color: white;
+}
+
 @media screen and (max-width: 768px) {
   .glide-mobile {
     max-height: 350px;
