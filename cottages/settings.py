@@ -28,6 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG')
+MYDEVIL = env.bool('MYDEVIL')
 
 ALLOWED_HOSTS = ['domki-hosting.usermd.net', 'localhost', '127.0.0.1']
 
@@ -136,7 +137,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = 'media/'
 STATIC_ROOT = 'static/'
 
-if not DEBUG:
+if MYDEVIL:
     STATIC_ROOT = os.path.join(BASE_DIR, 'public', 'static')
     MEDIA_ROOT = os.path.join(BASE_DIR, 'public', 'media')
 
