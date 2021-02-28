@@ -34,7 +34,7 @@ class Cottage(models.Model):
 
     price = models.DecimalField(max_digits=10, decimal_places=2)
     construction = models.ForeignKey(Construction, on_delete=models.CASCADE)
-    additionals = models.ManyToManyField(Additional, blank=True, null=True)
+    additionals = models.ManyToManyField(Additional, blank=True)
 
     transport_price = models.DecimalField(max_digits=6, decimal_places=2)
 

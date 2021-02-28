@@ -14,6 +14,31 @@
 
 {% block content %}
 <section class="section homepage">
+{% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <article class="message is-success">
+          <div class="message-header">
+            <p>Udało się</p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+              <div class="is-flex is-justify-content-center">
+                  <div class="success-checkmark">
+                      <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                      </div>
+                    </div>
+              </div>
+            {{ message }}
+          </div>
+        </article>
+    {% endfor %}
+</div>
+{% endif %}
     <div class="container">
         <div class="columns">
             <div class="column is-two-thirds is-flex is-align-items-center cottage-images">
@@ -46,7 +71,7 @@
 
 
             </div>
-            <div class="column is-flex is-flex-direction-column is-justify-content-center">
+            <div class="column is-flex is-flex-direction-column is-justify-content-center has-background-white">
                 <h1 class="is-size-2 has-text-primary is-uppercase has-text-weight-bold">
                     {{ cottage.name }}
                 </h1>
@@ -154,6 +179,7 @@
                     price += optionPrice;
                 }
                 priceElement.innerHTML = price.toFixed(2);
+                formPrice.value = price;
             checkbox.addEventListener('change', e => {
                 const isCheckedTarget = e.target.checked;
                 if (isCheckedTarget){
@@ -174,8 +200,8 @@
     <script>
         const services = document.getElementById('optional-services')
         const modal = document.querySelector('.modal')
-        const background = document.querySelector('.modal-background')
-        const close = document.querySelector('.delete')
+        const background = document.querySelector('.modal .modal-background')
+        const close = document.querySelector('.modal .delete')
 
         const toogleModal = () => {
             modal.classList.toggle('is-active')
@@ -184,5 +210,32 @@
         services.addEventListener('click', toogleModal)
         background.addEventListener('click', toogleModal)
         close.addEventListener('click', toogleModal)
+    </script>
+    <script>
+    const mail = document.querySelector('#id_contact_mail')
+    const phone = document.querySelector('#id_phone_number')
+    const form = document.querySelector('#contact-form')
+
+    form.addEventListener('submit', (e) => {
+        if (!mail.value && !phone.value){
+            alert("Musisz podać email, bądź numer telefonu")
+            e.preventDefault()
+        }
+    })
+    </script>
+    <script>
+    const message = document.querySelector('.message')
+    const messageClose = document.querySelector('.message .delete')
+
+    function closeMessage(){
+        message.remove()
+    }
+
+    if (messageClose){
+        setTimeout(closeMessage, 3000)
+        messageClose.addEventListener('click', closeMessage)
+    }
+
+
     </script>
 {% endblock %}

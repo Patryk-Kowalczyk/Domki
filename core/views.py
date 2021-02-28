@@ -5,6 +5,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Cottage, CottagePhoto, Construction, Additional
 from .forms import ContactForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.mail import send_mail
+from django.contrib import messages
 
 
 # Create your views here.
@@ -83,14 +85,38 @@ def cottage(request, slug):
     images = CottagePhoto.objects.filter(cottage=cottage)
     if request.method == 'POST':
         form = ContactForm(request.POST)
-        print(request.POST)
-        #if form.is_valid():
-            #print(form.cleaned_data)
-        return HttpResponse("Ok")
-    else:
-        form = ContactForm()
-        return render(request, "pages/cottagepage.html", {
-            'cottage': cottage,
-            'images': images,
-            'form': form,
-        })
+        if form.is_valid():
+            data = request.POST
+            message = 'Otrzymano wiadomość od: {} \n'.format(data.get('first_name'))
+            message += 'Dotyczącą domku: {}\n'.format(cottage.name)
+            if data.get('contact_mail'):
+                message += 'Email: {}\n'.format(data.get('contact_mail'))
+            if data.get('phone_number'):
+                message += 'Numer kontaktowy: {}\n'.format(data.get('phone_number'))
+            message += 'Dodatkowe opcje wybrane przy domku: \n'
+            for item, value in data.items():
+                if value == 'on':
+                    service = cottage.optionalservice_set.get(name=item)
+                    message += ' - ' + service.get_name_display() + f' ({service.price}zł)' + '\n'
+            message += f'O szacowanej całkowitej wartości: {data["form-price"]}zł'
+            send_mail(
+                "Nowa prośba o kontakt",
+                message,
+                'ixe.007@gmail.com',
+                ['ixe.007@gmail.com'],
+                fail_silently=False,
+            )
+            messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
+        else:
+            form = ContactForm(request.POST)
+            return render(request, "pages/cottagepage.html", {
+                'cottage': cottage,
+                'images': images,
+                'form': form,
+            })
+    form = ContactForm()
+    return render(request, "pages/cottagepage.html", {
+        'cottage': cottage,
+        'images': images,
+        'form': form,
+    })

@@ -14,15 +14,19 @@
   <div class="glide__track" data-glide-el="track">
     <ul class="glide__slides">
       <li class="glide__slide">
-          <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide1.jpg" %}")' />
+          <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide1.jpg" %}")'></div>
           <div class="glide__slide-info is-flex is-flex-direction-column is-justify-content-center">
               <h2 class="is-size-1">Domki drewniane</h2>
-              <p class="is-size-5">Budowane z pasją</p>
-              <button class="button is-transparent is-large">Sprawdź</button>
+              <p class="is-size-4">Budowane z pasją</p>
+              <br>
+              <button class="button is-transparent is-large scale-up">Sprawdź</button>
           </div>
       </li>
-      <li class="glide__slide"><img src="{% static "img/slider/slide2.jpg" %}" /></li>
-      <li class="glide__slide"><img src="{% static "img/slider/slide3.jpg" %}" /></li>
+      <li class="glide__slide">
+          <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide2.jpg" %}")'></div>
+      <li class="glide__slide">
+          <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide3.jpg" %}")'></div>
+      </li>
     </ul>
   </div>
   <div class="glide__arrows" data-glide-el="controls">
@@ -105,7 +109,7 @@
                 {% for cottage in cottages %}
                     <a class="column is-one-quarter-desktop is-one-third-tablet" href="{{ cottage.get_absolute_url }}">
                         <div>
-                            <div class="card">
+                            <div class="card hover-up">
                                 <div class="card-image">
                                     <figure class="image is-4by3">
                                         {% thumbnail cottage.cottage_photos.first.image "200x150" crop="center" as im %}
