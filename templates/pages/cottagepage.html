@@ -71,29 +71,31 @@
 
 
             </div>
-            <div class="column is-flex is-flex-direction-column is-justify-content-center has-background-white">
-                <h1 class="is-size-2 has-text-primary is-uppercase has-text-weight-bold">
+            <div class="column">
+                <div class="cottage-info has-background-white p-4">
+                    <h1 class="is-size-2 has-text-primary is-uppercase has-text-weight-bold">
                     {{ cottage.name }}
-                </h1>
-                <h2 class="is-size-4">Wymiary</h2>
-                <p>Długość: <span class="has-text-">{{ cottage.length }}cm</span></p>
-                <p>Szerokość: {{ cottage.width }}cm</p>
-                <p>Wysokość: {{ cottage.height }}cm</p>
+                    </h1>
+                    <h2 class="is-size-4">Wymiary</h2>
+                    <p>Długość: <span class="has-text-">{{ cottage.length }}cm</span></p>
+                    <p>Szerokość: {{ cottage.width }}cm</p>
+                    <p>Wysokość: {{ cottage.height }}cm</p>
 
-                <h2 class="is-size-4">Powierzchnia</h2>
-                <p>Podłogi: {{ cottage.floor_area }}m&#178;</p>
-                <p>Dachu: {{ cottage.roof_area }}m&#178;</p>
-                {% if cottage.terrace_area %}
-                <p>Tarasu: {{ cottage.terrace_area }}m&#178;</p>
-                {% endif %}
+                    <h2 class="is-size-4">Powierzchnia</h2>
+                    <p>Podłogi: {{ cottage.floor_area }}m&#178;</p>
+                    <p>Dachu: {{ cottage.roof_area }}m&#178;</p>
+                    {% if cottage.terrace_area %}
+                    <p>Tarasu: {{ cottage.terrace_area }}m&#178;</p>
+                    {% endif %}
 
-                <h2 class="is-size-4">Inne</h2>
-                <p>Ilość pomieszczeń: {{ cottage.number_of_rooms }}</p>
-                <p>Rodzaj konstrukcji: {{ cottage.construction.name }}</p>
-                <hr>
-                <p class="is-size-3">Cena: <span class="has-text-primary price">{{ cottage.price }}</span>zł</p>
-                <p class="is-size-7">Przybliżona cena wraz z wybranymi dodatkowymi opcjami</p>
-                <button class="button is-primary mt-5" id="optional-services">Dodatkowe usługi</button>
+                    <h2 class="is-size-4">Inne</h2>
+                    <p>Ilość pomieszczeń: {{ cottage.number_of_rooms }}</p>
+                    <p>Rodzaj konstrukcji: {{ cottage.construction.name }}</p>
+                    <hr>
+                    <p class="is-size-3">Cena: <span class="has-text-primary price">{{ cottage.price }}</span>zł</p>
+                    <p class="is-size-7">Przybliżona cena wraz z wybranymi dodatkowymi opcjami</p>
+                    <button class="button is-primary mt-5" id="optional-services">Dodatkowe usługi</button>
+                </div>
             </div>
         </div>
     </div>

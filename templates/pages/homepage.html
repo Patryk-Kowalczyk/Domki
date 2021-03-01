@@ -35,7 +35,7 @@
   </div>
 </div>
 
-    <section class="section homepage">
+    <section class="section homepage" id="cottages">
         <div class="columns">
          <div class="column is-one-quarter">
             <article class="panel is-primary has-background-white">
@@ -46,7 +46,7 @@
               <div class="panel-block is-flex is-flex-direction-column">
               <h3 class="is-size-6">Typ konstrukcji</h3>
                 <div class="select is-multiple is-fullwidth">
-                  <select multiple size="2" name="constructions">
+                  <select multiple size="{{ constructions.count }}" name="constructions">
                       {% for construction in constructions %}
                         <option value="{{ construction.name }}" {% if construction.name in params|get:"constructions" %} selected {% endif %}>{{ construction.name }}</option>
                       {% endfor %}
@@ -65,7 +65,7 @@
               <div class="panel-block is-flex is-flex-direction-column">
                <h3 class="is-size-6">Dodatkowa zabudowa</h3>
                 <div class="select is-multiple is-fullwidth">
-                  <select multiple size="2" name="additionals">
+                  <select multiple size="{{ additionals.count }}" name="additionals">
                       {% for additional in additionals %}
                         <option value="{{ additional.name }}" {% if additional.name in params|get:"additionals" %} selected {% endif %}>{{ additional.name }}</option>
                       {% endfor %}
@@ -175,6 +175,14 @@
     <script src="{% static "js/glide.min.js" %}"></script>
     <script>
         new Glide('.glide').mount()
+    </script>
+    <script>
+    const queryString = window.location.search;
+    const cottages = document.getElementById('cottages');
+
+    if (queryString){
+        cottages.scrollIntoView()
+    }
     </script>
 
 {% endblock %}
