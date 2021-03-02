@@ -38,6 +38,9 @@ def filter(request):
             qs = qs.filter(number_of_rooms__in=["2", "3"])
         elif rooms == "Więcej":
             qs = qs.filter(number_of_rooms__gt=3)
+    if url_query_dict.get('price-min'):
+        qs = qs.filter(price__gte=math.floor(float(url_query_dict.get('price-min')[0])-1))
+        qs = qs.filter(price__lte=math.ceil(float(url_query_dict.get('price-max')[0])+1))
     return qs, url_query_dict
 
 def index(request):
@@ -55,6 +58,12 @@ def index(request):
         if list:
             min = math.floor(list.order_by('height').first()[0])
             max = math.ceil(list.order_by('height').last()[0])
+
+    class ValuesOfPrice:
+        list = Cottage.objects.values_list('price')
+        if list:
+            min = math.floor(list.order_by('price').first()[0])
+            max = math.ceil(list.order_by('price').last()[0])
 
 
     qs, params = filter(request)
@@ -74,11 +83,15 @@ def index(request):
         "additionals": additionals,
         "floor_area": ValuesOfArea,
         "height": ValuesOfHeight,
+        "price": ValuesOfPrice,
         "params": params,
     })
 
 def about(request):
     return render(request, "pages/aboutpage.html")
+
+def plots(request):
+    return render(request, "pages/plots.html")
 
 def cottage(request, slug):
     cottage = get_object_or_404(Cottage, slug=slug)

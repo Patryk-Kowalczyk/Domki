@@ -24,8 +24,18 @@
       </li>
       <li class="glide__slide">
           <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide2.jpg" %}")'></div>
+          <div class="glide__slide-info is-flex is-flex-direction-column is-justify-content-center">
+              <h2 class="is-size-1">Działki nad jeziorem</h2>
+              <p class="is-size-4">Doskonałe położenie w dobrych cenach</p>
+          </div>
       <li class="glide__slide">
           <div class="glide__slide-image" style='background-image: url("{% static "img/slider/slide3.jpg" %}")'></div>
+          <div class="glide__slide-info is-flex is-flex-direction-column is-justify-content-center">
+              <h2 class="is-size-1">Promocje</h2>
+              <p class="is-size-4">Na wybrane domki</p>
+              <br>
+              <button class="button is-transparent is-large scale-up">Sprawdź</button>
+          </div>
       </li>
     </ul>
   </div>
@@ -99,6 +109,28 @@
               </div>
 
 
+                <div class="panel-block is-flex is-flex-direction-column is-align-items-stretch">
+                <h3 class="is-size-6 is-align-self-center">Cena</h3>
+                  <div class="is-flex is-flex-direction-column slider-multiple">
+                      <div class="outputs has-output">
+                          <output><span class="output-price-min">1000</span>zł</output>
+                          <output><span class="output-price-max">10000</span>zł</output>
+                      </div>
+                      <div class="price-slider">
+                          <input id="price-input-left" name="price-min" class="is-fullwidth" min="{{ price.min }}" max="{{ price.max }}"
+                                 value="{% if params|get:"floor_area" %}{{ params|get:"price-min"}}{% else %}{{ price.min }}{% endif %}"
+                                 step="1"
+                                 type="range">
+                          <input id="price-input-right" name="price-max" class="is-fullwidth" min="{{ price.min }}" max="{{ price.max }}"
+                                 value="{% if params|get:"floor_area" %}{{ params|get:"price-max"}}{% else %}{{ price.max }}{% endif %}"
+                                 step="1" type="range">
+                          <div class="track"></div>
+                          <div class="range"></div>
+                      </div>
+                  </div>
+              </div>
+
+
 
                     <input type="submit" value="Szukaj" class="button is-primary mt-3">
                 </form>
@@ -123,6 +155,7 @@
                                             <p>
                                                 {{ cottage.description|truncatewords:15|safe }}
                                             </p>
+                                        <h4 class="has-text-primary has-text-right">{{ cottage.price }}zł</h4>
                                     </div>
                                 </div>
                             </div>
@@ -174,7 +207,10 @@
     </script>
     <script src="{% static "js/glide.min.js" %}"></script>
     <script>
-        new Glide('.glide').mount()
+        new Glide('.glide', {
+          autoplay: 4000,
+          hoverpause: false,
+        }).mount()
     </script>
     <script>
     const queryString = window.location.search;
@@ -184,5 +220,40 @@
         cottages.scrollIntoView()
     }
     </script>
+    <script>
+    const inputLeft = document.getElementById('price-input-left');
+    const inputRight = document.getElementById('price-input-right');
+    const range = document.querySelector('.slider-multiple .range');
+    const outputMin = document.querySelector('.output-price-min');
+    const outputMax = document.querySelector('.output-price-max');
 
+    function setLeftValue(){
+        const _this = inputLeft,
+            min = parseInt(_this.min),
+            max = parseInt(_this.max);
+
+        _this.value = Math.min(parseInt(_this.value), parseInt(inputRight.value ) - parseInt(_this.step))
+
+        let percent = (_this.value - min) / (max - min) * 100;
+        range.style.left = percent + "%";
+        outputMin.innerHTML = _this.value;
+    }
+    setLeftValue();
+
+    function setRightValue(){
+        const _this = inputRight,
+            min = parseInt(_this.min),
+            max = parseInt(_this.max);
+
+        _this.value = Math.max(parseInt(_this.value), parseInt(inputLeft.value) + parseInt(_this.step))
+        let percent = (_this.value - min) / (max - min) * 100;
+        range.style.right = ( 100 - percent ) + "%";
+        outputMax.innerHTML = _this.value;
+    }
+    setRightValue();
+
+    inputLeft.addEventListener('input', setLeftValue)
+    inputRight.addEventListener('input', setRightValue)
+
+    </script>
 {% endblock %}

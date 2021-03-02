@@ -94,7 +94,8 @@
                     <hr>
                     <p class="is-size-3">Cena: <span class="has-text-primary price">{{ cottage.price }}</span>zł</p>
                     <p class="is-size-7">Przybliżona cena wraz z wybranymi dodatkowymi opcjami</p>
-                    <button class="button is-primary mt-5" id="optional-services">Dodatkowe usługi</button>
+                    <button class="button is-primary mt-4 mb-4" id="optional-services">Dodatkowe usługi</button>
+                    <p class="is-size-7" id="chosen-text"></p>
                 </div>
             </div>
         </div>
@@ -120,6 +121,9 @@
                         </label>
 
                     {% endfor %}
+
+                    <hr>
+                        <p>Dodatkowy koszt transportu <span class="has-text-primary">{{ cottage.transport_price }}zł</span> za 1km</p>
 
                     </div>
             </section>
@@ -174,6 +178,28 @@
 
         let price = formPrice.value || parseFloat({{ cottage.price }});
 
+        const modalCheckBoxes = document.querySelectorAll('input[type=checkbox]');
+        const chosenText = document.getElementById('chosen-text');
+
+        function setChosenText(){
+            let checked = [...modalCheckBoxes].filter( _checkbox => _checkbox.checked)
+
+                if (checked.length > 0){
+                    chosenText.innerHTML = '<b>Wybrane usługi:</b> '
+                    checked.forEach(checkedElement => {
+                        chosenText.innerHTML += `${checkedElement.nextElementSibling.firstElementChild.innerHTML}, `
+                    })
+                    chosenText.innerHTML = chosenText.innerHTML.slice(0, -2)
+                    chosenText.innerHTML += "."
+                } else {
+                    chosenText.innerHTML = ""
+                }
+        }
+
+        modalCheckBoxes.forEach( checkbox => {
+            checkbox.addEventListener('change', setChosenText)
+        })
+
         window.onload = () => {
             checkboxes.forEach(checkbox => {
             const optionPrice = parseFloat(checkbox.nextElementSibling.querySelector('.optional-price').innerHTML)
@@ -193,6 +219,7 @@
                 priceElement.innerHTML = price.toFixed(2);
             })
         })
+            setChosenText()
         }
 
 
@@ -237,7 +264,6 @@
         setTimeout(closeMessage, 3000)
         messageClose.addEventListener('click', closeMessage)
     }
-
 
     </script>
 {% endblock %}
