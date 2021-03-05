@@ -20,6 +20,10 @@ def send_contact_mail(data, cottage=None):
         message += 'Email: {}\n'.format(data.get('contact_mail'))
     if data.get('phone_number'):
         message += 'Numer kontaktowy: {}\n'.format(data.get('phone_number'))
+    if data.get('text'):
+        message += "O treści: \n"
+        message += data.get('text')
+        message += "\n"
     if cottage:
         message += 'Dodatkowe opcje wybrane przy domku: \n'
         for item, value in data.items():
@@ -125,7 +129,7 @@ def contact(request):
         form = ContactForm(request.POST)
         if form.is_valid():
             data = request.POST
-            send_contact_mail(data, True)
+            send_contact_mail(data, cottage)
             messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
     return render(request, "pages/contact.html", {'form': form})
 
@@ -137,7 +141,7 @@ def cottage(request, slug):
         form = ContactForm(request.POST)
         if form.is_valid():
             data = request.POST
-            send_contact_mail(data, True)
+            send_contact_mail(data, cottage)
             messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
 
     return render(request, "pages/cottagepage.html", {
