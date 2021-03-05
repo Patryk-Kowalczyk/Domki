@@ -185,14 +185,14 @@
             let checked = [...modalCheckBoxes].filter( _checkbox => _checkbox.checked)
 
                 if (checked.length > 0){
-                    chosenText.innerHTML = '<b>Wybrane usługi:</b> '
+                    chosenText.innerHTML = '<ul><b>Wybrane usługi:</b> '
                     checked.forEach(checkedElement => {
-                        chosenText.innerHTML += `${checkedElement.nextElementSibling.firstElementChild.innerHTML}, `
+                        chosenText.innerHTML += `<li>${checkedElement.nextElementSibling.querySelector('.optional-name').innerHTML}(<span class="optional-price">+${checkedElement.nextElementSibling.querySelector('.optional-price').innerHTML}</span>),</li> `
                     })
                     chosenText.innerHTML = chosenText.innerHTML.slice(0, -2)
                     chosenText.innerHTML += "."
                 } else {
-                    chosenText.innerHTML = ""
+                    chosenText.innerHTML = "</ul>"
                 }
         }
 

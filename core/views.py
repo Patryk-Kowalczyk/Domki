@@ -8,8 +8,34 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
 from django.contrib import messages
 
-
 # Create your views here.
+
+def send_contact_mail(data, cottage=None):
+    message = 'Otrzymano wiadomość od: {} \n'.format(data.get('first_name'))
+    if cottage:
+        message += 'Dotyczącą domku: {}\n'.format(cottage.name)
+    else:
+        'Z prośbą o kontakt\n'
+    if data.get('contact_mail'):
+        message += 'Email: {}\n'.format(data.get('contact_mail'))
+    if data.get('phone_number'):
+        message += 'Numer kontaktowy: {}\n'.format(data.get('phone_number'))
+    if cottage:
+        message += 'Dodatkowe opcje wybrane przy domku: \n'
+        for item, value in data.items():
+            if value == 'on':
+                service = cottage.optionalservice_set.get(name=item)
+                message += ' - ' + service.get_name_display() + f' ({service.price}zł)' + '\n'
+        message += f'O szacowanej całkowitej wartości: {data["form-price"]}zł'
+    send_mail(
+        "Nowa prośba o kontakt",
+        message,
+        'ixe.007@gmail.com',
+        ['ixe.007@gmail.com'],
+        fail_silently=False,
+    )
+    return True
+
 
 def filter(request):
     qs = Cottage.objects.all()
@@ -93,41 +119,27 @@ def about(request):
 def plots(request):
     return render(request, "pages/plots.html")
 
-def cottage(request, slug):
-    cottage = get_object_or_404(Cottage, slug=slug)
-    images = CottagePhoto.objects.filter(cottage=cottage)
+def contact(request):
+    form = ContactForm()
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
             data = request.POST
-            message = 'Otrzymano wiadomość od: {} \n'.format(data.get('first_name'))
-            message += 'Dotyczącą domku: {}\n'.format(cottage.name)
-            if data.get('contact_mail'):
-                message += 'Email: {}\n'.format(data.get('contact_mail'))
-            if data.get('phone_number'):
-                message += 'Numer kontaktowy: {}\n'.format(data.get('phone_number'))
-            message += 'Dodatkowe opcje wybrane przy domku: \n'
-            for item, value in data.items():
-                if value == 'on':
-                    service = cottage.optionalservice_set.get(name=item)
-                    message += ' - ' + service.get_name_display() + f' ({service.price}zł)' + '\n'
-            message += f'O szacowanej całkowitej wartości: {data["form-price"]}zł'
-            send_mail(
-                "Nowa prośba o kontakt",
-                message,
-                'ixe.007@gmail.com',
-                ['ixe.007@gmail.com'],
-                fail_silently=False,
-            )
+            send_contact_mail(data, True)
             messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
-        else:
-            form = ContactForm(request.POST)
-            return render(request, "pages/cottagepage.html", {
-                'cottage': cottage,
-                'images': images,
-                'form': form,
-            })
+    return render(request, "pages/contact.html", {'form': form})
+
+def cottage(request, slug):
+    cottage = get_object_or_404(Cottage, slug=slug)
+    images = CottagePhoto.objects.filter(cottage=cottage)
     form = ContactForm()
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            data = request.POST
+            send_contact_mail(data, True)
+            messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
+
     return render(request, "pages/cottagepage.html", {
         'cottage': cottage,
         'images': images,

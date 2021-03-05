@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% load static %}
+{% load bulma_tags %}
+
+{% block title %}
+    Kontakt
+{% endblock %}
+
+{% block content %}
+    {% if messages %}
+<div class="messages">
+    {% for message in messages %}
+        <article class="message is-success">
+          <div class="message-header">
+            <p>Udało się</p>
+            <button class="delete" aria-label="delete"></button>
+          </div>
+          <div class="message-body">
+              <div class="is-flex is-justify-content-center">
+                  <div class="success-checkmark">
+                      <div class="check-icon">
+                        <span class="icon-line line-tip"></span>
+                        <span class="icon-line line-long"></span>
+                        <div class="icon-circle"></div>
+                        <div class="icon-fix"></div>
+                      </div>
+                    </div>
+              </div>
+            {{ message }}
+          </div>
+        </article>
+    {% endfor %}
+</div>
+{% endif %}
+
+    <section class="hero is-medium has-background">
+        <img src="{% static "img/abouthero.jpg" %}" alt="" class="hero-background">
+        <div class="hero-body">
+            <p class="title">
+                Kontakt
+            </p>
+            <p class="subtitle">
+                Dane kontaktowe
+            </p>
+        </div>
+    </section>
+
+    <section class="section container">
+            <h2 class="has-text-centered has-text-primary is-size-2 mb-5">Dane kontaktowe</h2>
+            <div class="columns">
+                <div class="column is-half has-text-justified is-flex is-flex-direction-column is-align-items-center is-justify-content-center">
+                    <h3 class="is-size-5 has-text-primary">Adres</h3>
+                    <p>ul. Andrzeja Struga 31 A</p>
+                    <p>70-784 Szczecin</p>
+                    <br>
+                    <h3 class="is-size-5 has-text-primary">Telefony kontaktowe</h3>
+                    <p>Tel. <a href="tel: +48 602-26-10-01">+48 602-26-10-01</a></p>
+                    <p>Tel. <a href="tel: +48 600-03-63-63">+48 600-03-63-63</a></p>
+                    <br>
+                    <h3 class="is-size-5 has-text-primary">Biuro</h3>
+                    <p class="is-size-6">Poniedziałek - Piątek</p>
+                    <p class="is-italic">w godz. 9:00 - 17:00</p>
+                    <p class="is-size-6">Sobota</p>
+                    <p class="is-italic">w godz. 9:00 - 13:00</p>
+                </div>
+                <div class="column is-half">
+                    <iframe style="width: 100%; height: 100%; min-height: 500px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14469.416434852019!2d14.664162297302193!3d53.38475477415948!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4700a594881cde71%3A0x381e20ea0ff9769e!2sDomyDrewnianeSczecin.pl%20%E2%80%93%20konstrukcje%20drewniane%2C%20domy%20drewniane%20ca%C5%82oroczne%2C%20domki%20letniskowe%2C%20zabudowy%20drewniane!5e0!3m2!1spl!2spl!4v1614872390246!5m2!1spl!2spl" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+    </section>
+
+    <section class="section homepage is-flex is-justify-content-center">
+        <div class="p-4 max-width">
+            <h2 class="is-size-2 has-text-primary">Formularz kontaktowy</h2>
+            <form action="" method="post" class="is-flex is-flex-direction-column" id="contact-form">
+                {% csrf_token %}
+                {{ form|bulma }}
+                <input type="submit" value="Wyślij" class="button is-primary has-text-centered">
+            </form>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block javascript %}
+        <script>
+    const mail = document.querySelector('#id_contact_mail')
+    const phone = document.querySelector('#id_phone_number')
+    const form = document.querySelector('#contact-form')
+
+    form.addEventListener('submit', (e) => {
+        if (!mail.value && !phone.value){
+            alert("Musisz podać email, bądź numer telefonu")
+            e.preventDefault()
+        }
+    })
+    </script>
+    <script>
+    const message = document.querySelector('.message')
+    const messageClose = document.querySelector('.message .delete')
+
+    function closeMessage(){
+        message.remove()
+    }
+
+    if (messageClose){
+        setTimeout(closeMessage, 3000)
+        messageClose.addEventListener('click', closeMessage)
+    }
+
+    </script>
+{% endblock %}
