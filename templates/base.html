@@ -22,12 +22,7 @@
       <div class="container">
         <div class="navbar-brand">
           <a class="navbar-item" href="{% url "index" %}">
-            <span class="icon-text">
-              <span class="icon">
-                <i class="fas fa-home"></i>
-              </span>
-              <span>Domki<br />letniskowe</span>
-            </span>
+              <img src="{% static "img/logo.png" %}" alt="Domki letniskowe logo">
           </a>
 
           <a
@@ -67,11 +62,29 @@
 
         {% block content %} {% endblock %}
 
-    <footer class="footer is-dark">
+    <footer class="footer has-background-primary">
         <div class="container">
             <div class="columns">
                 <div class="column is-two-fifths">© 2021 Domki letniskowe <br> <span class="is-size-7">Wszelkie prawa zastrzeżone</span></div>
-                <div class="column">Więcej info</div>
+                <div class="column columns">
+                    <div class="column">
+                        <h3 class="is-size-5 is-bold has-text-white">Adres</h3>
+                        <p>ul. Andrzeja Struga 31 A</p>
+                        <p>70-784 Szczecin</p>
+                    </div>
+                    <div class="column">
+                        <h3 class="is-size-5 is-bold has-text-white">Telefony kontaktowe</h3>
+                        <p>Tel. <a href="tel: +48 602-26-10-01">+48 602-26-10-01</a></p>
+                        <p>Tel. <a href="tel: +48 600-03-63-63">+48 600-03-63-63</a></p>
+                    </div>
+                    <div class="column">
+                        <h3 class="is-size-5 is-bold has-text-white">Biuro</h3>
+                        <p class="is-size-6">Poniedziałek - Piątek</p>
+                        <p class="is-italic">w godz. 9:00 - 17:00</p>
+                        <p class="is-size-6">Sobota</p>
+                        <p class="is-italic">w godz. 9:00 - 13:00</p>
+                    </div>
+                </div>
             </div>
         </div>
     </footer>

@@ -91,11 +91,21 @@
                     <h2 class="is-size-4">Inne</h2>
                     <p>Ilość pomieszczeń: {{ cottage.number_of_rooms }}</p>
                     <p>Rodzaj konstrukcji: {{ cottage.construction.name }}</p>
+                    <p class="is-size-3">Cena: <span class="has-text-link price">{{ cottage.price }}</span>zł</p>
                     <hr>
-                    <p class="is-size-3">Cena: <span class="has-text-primary price">{{ cottage.price }}</span>zł</p>
-                    <p class="is-size-7">Przybliżona cena wraz z wybranymi dodatkowymi opcjami</p>
-                    <button class="button is-primary mt-4 mb-4" id="optional-services">Dodatkowe usługi</button>
-                    <p class="is-size-7" id="chosen-text"></p>
+                    <p>Opcje dodatkowe: </p>
+                    {% for optional in cottage.optionalservice_set.all %}
+
+                        <input type="checkbox" name="{{ optional.name }}" id="{{ optional.name }}" form="contact-form" class="is-checkradio optional-checkbox" {% if optional.name in request.POST %} checked {% endif %}>
+                        <label class="optional-field is-size-7" for="{{ optional.name }}">
+                            <span class="optional-name">{{ optional.get_name_display }}</span>
+                            <span class="has-text-link">+<span class="optional-price">{{ optional.price }}</span>zł</span>
+                        </label>
+
+                    {% endfor %}
+                <div class="is-size-7 mt-2">Dodatkowa cena transportu <span class="has-text-link">+{{ cottage.transport_price }}zł</span> za 1km</div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -112,20 +122,7 @@
                 <section class="modal-card-body">
                     <div class="is-flex is-flex-direction-column">
 
-                    {% for optional in cottage.optionalservice_set.all %}
 
-                        <input type="checkbox" name="{{ optional.name }}" id="{{ optional.name }}" form="contact-form" class="is-checkradio optional-checkbox">
-                        <label class="optional-field" for="{{ optional.name }}">
-                            <span class="optional-name">{{ optional.get_name_display }}</span>
-                            <span class="optional-price">{{ optional.price }}zł</span>
-                        </label>
-
-                    {% endfor %}
-
-                    <hr>
-                        <p>Dodatkowy koszt transportu <span class="has-text-primary">{{ cottage.transport_price }}zł</span> za 1km</p>
-
-                    </div>
             </section>
           </div>
         </div>
@@ -178,31 +175,9 @@
 
         let price = formPrice.value || parseFloat({{ cottage.price }});
 
-        const modalCheckBoxes = document.querySelectorAll('input[type=checkbox]');
-        const chosenText = document.getElementById('chosen-text');
-
-        function setChosenText(){
-            let checked = [...modalCheckBoxes].filter( _checkbox => _checkbox.checked)
-
-                if (checked.length > 0){
-                    chosenText.innerHTML = '<ul><b>Wybrane usługi:</b> '
-                    checked.forEach(checkedElement => {
-                        chosenText.innerHTML += `<li>${checkedElement.nextElementSibling.querySelector('.optional-name').innerHTML}(<span class="optional-price">+${checkedElement.nextElementSibling.querySelector('.optional-price').innerHTML}</span>),</li> `
-                    })
-                    chosenText.innerHTML = chosenText.innerHTML.slice(0, -2)
-                    chosenText.innerHTML += "."
-                } else {
-                    chosenText.innerHTML = "</ul>"
-                }
-        }
-
-        modalCheckBoxes.forEach( checkbox => {
-            checkbox.addEventListener('change', setChosenText)
-        })
-
         window.onload = () => {
             checkboxes.forEach(checkbox => {
-            const optionPrice = parseFloat(checkbox.nextElementSibling.querySelector('.optional-price').innerHTML)
+            const optionPrice = parseFloat(checkbox.nextElementSibling.querySelector('.optional-price').innerHTML.replace(',','.'));
             if (checkbox.checked){
                     price += optionPrice;
                 }
@@ -215,30 +190,14 @@
                 } else {
                     price -= optionPrice;
                 }
-                formPrice.value = price;
+                formPrice.value = price.toFixed(2);
                 priceElement.innerHTML = price.toFixed(2);
             })
         })
-            setChosenText()
         }
 
 
 
-    </script>
-
-    <script>
-        const services = document.getElementById('optional-services')
-        const modal = document.querySelector('.modal')
-        const background = document.querySelector('.modal .modal-background')
-        const close = document.querySelector('.modal .delete')
-
-        const toogleModal = () => {
-            modal.classList.toggle('is-active')
-        }
-
-        services.addEventListener('click', toogleModal)
-        background.addEventListener('click', toogleModal)
-        close.addEventListener('click', toogleModal)
     </script>
     <script>
     const mail = document.querySelector('#id_contact_mail')

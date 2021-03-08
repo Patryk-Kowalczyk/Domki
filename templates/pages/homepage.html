@@ -99,7 +99,7 @@
               <div class="panel-block is-flex is-flex-direction-column is-justify-content-center">
                   <h3 class="is-size-6">Ilość pokoi</h3>
                   <div class="select is-fullwidth">
-                    <select name="rooms">
+                    <select name="rooms" >
                         <option value="Dowolna" {% if params|get:"rooms" == "Dowolna" %} selected {% endif %}>Dowolna</option>
                         <option value="1" {% if params|get:"rooms" == "1" %} selected {% endif %}>1</option>
                         <option value="2-3" {% if params|get:"rooms" == "2-3" %} selected {% endif %}>2-3</option>
@@ -155,7 +155,7 @@
                                             <p>
                                                 {{ cottage.description|truncatewords:15|safe }}
                                             </p>
-                                        <h4 class="has-text-primary has-text-right">{{ cottage.price }}zł</h4>
+                                        <h4 class="has-text-link has-text-right">{{ cottage.price }}zł</h4>
                                     </div>
                                 </div>
                             </div>
