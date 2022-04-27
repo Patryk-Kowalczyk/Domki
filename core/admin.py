@@ -1,13 +1,16 @@
 from django.contrib import admin
-from .models import CottagePhoto, Cottage, Construction, Additional, OptionalService
+from .models import CottagePhoto, Cottage, Construction, Additional, OptionalService, GalleryPhoto
+
 
 # Register your models here.
 
 class OptionalServiceInline(admin.TabularInline):
     model = OptionalService
 
+
 class CottagePhotoInline(admin.TabularInline):
     model = CottagePhoto
+
 
 @admin.register(Cottage)
 class CottageAdmin(admin.ModelAdmin):
@@ -16,17 +19,24 @@ class CottageAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
     save_as = True
 
+
 @admin.register(CottagePhoto)
 class CottagePhotoAdmin(admin.ModelAdmin):
     model = CottagePhoto
+
+
+@admin.register(GalleryPhoto)
+class GalleryPhotoAdmin(admin.ModelAdmin):
+    model = GalleryPhoto
+
 
 @admin.register(Construction)
 class ConstructionAdmin(admin.ModelAdmin):
     model = Construction
     prepopulated_fields = {'slug': ('name',)}
 
+
 @admin.register(Additional)
 class AdditionalAdmin(admin.ModelAdmin):
     model = Additional
     prepopulated_fields = {'slug': ('name',)}
-

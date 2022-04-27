@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    O nas
+{% endblock %}
+
+{% block content %}
+    <section class="hero is-medium has-background">
+        <img src="{% static "img/abouthero.jpg" %}" alt="" class="hero-background">
+        <div class="hero-body">
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="container">
+            <h2 class="has-text-centered has-text-primary is-size-2 mb-5">NASZE PROJEKTY</h2>
+            <div class="columns is-multiline is-mobile">
+                 {% for photo in photos %}
+                    <div class="column is-one-quarter">
+                        <figure class="image is-4by3">
+                            <a data-fslightbox href="{{ photo.image.url  }}">
+                                <img src="{{ photo.image.url }}"  width="{{ im.width }}" height="{{ im.height }}">
+                            </a>
+                        </figure>
+                    </div>
+                 {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block javascript %}
+    <script src="{% static "js/fslightbox.js" %}"></script>
+{% endblock %}

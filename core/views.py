@@ -2,11 +2,12 @@ import math
 
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
-from .models import Cottage, CottagePhoto, Construction, Additional
+from .models import Cottage, CottagePhoto, Construction, Additional, GalleryPhoto
 from .forms import ContactForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
 from django.contrib import messages
+
 
 # Create your views here.
 
@@ -69,9 +70,10 @@ def filter(request):
         elif rooms == "Więcej":
             qs = qs.filter(number_of_rooms__gt=3)
     if url_query_dict.get('price-min'):
-        qs = qs.filter(price__gte=math.floor(float(url_query_dict.get('price-min')[0])-1))
-        qs = qs.filter(price__lte=math.ceil(float(url_query_dict.get('price-max')[0])+1))
+        qs = qs.filter(price__gte=math.floor(float(url_query_dict.get('price-min')[0]) - 1))
+        qs = qs.filter(price__lte=math.ceil(float(url_query_dict.get('price-max')[0]) + 1))
     return qs, url_query_dict
+
 
 def index(request):
     constructions = Construction.objects.all()
@@ -95,7 +97,6 @@ def index(request):
             min = math.floor(list.order_by('price').first()[0])
             max = math.ceil(list.order_by('price').last()[0])
 
-
     qs, params = filter(request)
     paginator = Paginator(qs, "8")
     page_number = request.GET.get('page')
@@ -117,11 +118,19 @@ def index(request):
         "params": params,
     })
 
+
 def about(request):
     return render(request, "pages/aboutpage.html")
 
-def plots(request):
-    return render(request, "pages/plots.html")
+
+def whatmedo(request):
+    return render(request, "pages/whatmedo.html")
+
+
+def realizations(request):
+    photos = GalleryPhoto.objects.all().order_by('place')
+    return render(request, "pages/realizations.html", {'photos': photos})
+
 
 def contact(request):
     form = ContactForm()
@@ -132,6 +141,7 @@ def contact(request):
             send_contact_mail(data, cottage)
             messages.success(request, "Pomyślnie wysłano prośbę o kontakt")
     return render(request, "pages/contact.html", {'form': form})
+
 
 def cottage(request, slug):
     cottage = get_object_or_404(Cottage, slug=slug)
