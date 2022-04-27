@@ -11,8 +11,8 @@ class Construction(models.Model):
     class Meta:
         verbose_name = 'Typ konstrukcji'
         verbose_name_plural = 'Typ konstrukcji'
-    name = models.CharField(max_length=20)
-    slug = models.SlugField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name="Nazwa")
+    slug = models.SlugField(max_length=20, verbose_name="Unikalny identyfikator")
 
     def __str__(self):
         return self.name
@@ -22,8 +22,8 @@ class Additional(models.Model):
     class Meta:
         verbose_name = 'Dodatkowa zabudowa'
         verbose_name_plural = 'Dodatkowa zabudowa'
-    name = models.CharField(max_length=20)
-    slug = models.SlugField(max_length=20)
+    name = models.CharField(max_length=20, verbose_name="Nazwa")
+    slug = models.SlugField(max_length=20, verbose_name="Unikalny identyfikator")
 
     def __str__(self):
         return self.name
@@ -33,8 +33,8 @@ class Cottage(models.Model):
     class Meta:
         verbose_name = 'Domki'
         verbose_name_plural = 'Domki'
-    name = models.CharField(max_length=100, verbose_name="Unikalny identyfikator")
-    slug = models.SlugField(unique=True, max_length=100)
+    name = models.CharField(max_length=100, verbose_name="Nazwa")
+    slug = models.SlugField(unique=True, max_length=100, verbose_name="Unikalny identyfikator")
 
     length = models.IntegerField(verbose_name="Długość")
     width = models.IntegerField(verbose_name="Szerokość")
