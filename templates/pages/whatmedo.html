@@ -2,33 +2,15 @@
 {% load static %}
 
 {% block title %}
-    O nas
+    Co robimy
 {% endblock %}
 
 {% block content %}
+
     <section class="hero is-medium has-background">
         <img src="{% static "img/abouthero.jpg" %}" alt="" class="hero-background">
         <div class="hero-body">
         </div>
-    </section>
-
-    <section class="section container">
-            <h2 class="has-text-centered has-text-primary is-size-2 mb-5">CO ROBIMY</h2>
-            <div class="columns">
-                <div class="column is-half has-text-justified is-flex is-align-items-center">
-                    Firma Domy Drewniane Szczecin powstała w odpowiedzi na wysokie zapotrzebowanie na oryginalne i stylowe konstrukcje drewniane. Już od 2000 roku rozpoczynaliśmy swoją przygodę jako monterzy konstrukcji drewnianych. 
-
-                    Wychodząc naprzeciw oczekiwaniom klientów, podnosząc uprzednio kwalifikacje naszej kadry pracowniczej, rozszerzyliśmy spektrum swojej działalności. Staliśmy się pionierem w produkcji oraz budowie wszelkiego rodzaju niestandardowych i luksusowych konstrukcji oraz budowli drewnianych.
-                    
-                    Domy Drewniane Szczecin jako jedna z niewielu firm na polskim rynku posiada kompleksową linię technologiczną do produkcji domów drewnianych. Służymy fachową pomocą i profesjonalnym doradztwem przy realizacji wszelkich inwestycji.
-                    
-                </div>
-                <div class="column is-half has-line-left">
-                    <figure class="image">
-                        <img style="height: 80%" src="{% static "img/aboutcottage.png" %}" alt="">
-                    </figure>
-                </div>
-            </div>
     </section>
     <section class="section has-background-primary">
         <div class="container">
@@ -65,20 +47,65 @@
         </div>
     </section>
 
-    <section class="section">
-        <div class="container">
-            <h2 class="has-text-centered has-text-primary is-size-2 mb-5">Nasze projekty</h2>
-            <div class="columns is-multiline">
-                <div class="column is-one-quarter">
-                    <figure class="image is-4by3">
-                        <a data-fslightbox href="{% static "img/aboutcottage.png" %}">
-                            <img src="{% static "img/aboutcottage.png" %}">
-                        </a>
-                    </figure>
-                </div>
+    <section class="section container">
+        <h2 class="has-text-centered has-text-primary is-size-2 mb-5">CO ROBIMY</h2>
+        <div class="columns is-centered is-vcentered is-mobile">
+            <div class="column is-half is-narrow has-text-centered">
+                <p><b>Zajmujemy się produkcją oraz montażem</b></p><br>
+                <p>domów całorocznych, domów szkieletowych i domów letniskowych. Wykonujemy domy pod klucz oraz domy do
+                    stanu surowego otwartego.</p>
+            </div>
+            <div class="column is-half">
+                <figure class="image">
+                    <img style="height: 80%" src="{% static "img/aboutcottage.jpg" %}" alt="">
+                </figure>
             </div>
         </div>
+
+        <div class="columns is-centered is-vcentered is-mobile">
+            <div class="column is-half">
+                <figure class="image">
+                    <img style="height: 80%" src="{% static "img/aboutcottage.jpg" %}" alt="">
+                </figure>
+            </div>
+            <div class="column is-half is-narrow has-text-centered">
+                <p><b>Prowadzimy budowę</b></p><br>
+                <p>w oparciu o projekt dostarczony przez klienta. Dzięki współpracy ze sprawdzonym biurem
+                    architektonicznym proponujemy stworzenie indywidualnego projektu dostosowanego do Państwa potrzeb i
+                    możliwości.</p>
+            </div>
+        </div>
+
+        <div class="columns is-centered is-vcentered is-mobile">
+            <div class="column is-half is-narrow has-text-centered">
+                <p><b>Produkty najwyższej jakości</b></p><br>
+                <p>od całej gamy pergoli, altan i innych elementów architektury ogrodowej. Realizujemy indywidualne
+                    projekty i nieszablonowe rozwiązania zgodnie z wszelkimi wymaganiami.</p>
+            </div>
+            <div class="column is-half">
+                <figure class="image">
+                    <img style="height: 80%" src="{% static "img/aboutcottage.jpg" %}" alt="">
+                </figure>
+            </div>
+        </div>
+
+        <div class="columns is-centered is-vcentered is-mobile">
+            <div class="column is-half">
+                <figure class="image">
+                    <img style="height: 80%" src="{% static "img/aboutcottage.jpg" %}" alt="">
+                </figure>
+            </div>
+            <div class="column is-half is-narrow has-text-centered">
+                <p><b>Działki nad jeziorem </b></p><br>
+                <p>wraz ziemią to idealne rozwiązanie, aby zamówić u nas gotowy domek. Fakt ten sprawia, że nie musisz
+                    się martwić już niczym tylko korzystać z uroków domku letniskowego nad jeziorem. </p>
+            </div>
+        </div>
+
+
     </section>
+
+
 {% endblock %}
 
 
