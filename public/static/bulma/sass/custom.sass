@@ -1,0 +1,510 @@
+@import "./node_modules/bulma/sass/utilities/initial-variables"
+// Custom styles
+$background-homepage: #eeeeee
+
+
+select
+  overflow: hidden
+.select:not(.is-multiple):not(.is-loading)::after
+  border-color: $text
+
+.is-size-1
+  line-height: 3.5rem
+
+.button
+  border-width: 2px
+
+.glide__arrow--left
+  @media screen and (max-width: 768px)
+    left: 1rem !important
+
+.glide__arrow--right
+  @media screen and (max-width: 768px)
+    right: 1rem !important
+
+.navbar-brand
+  align-items: center
+
+.columns.is-all-white
+  & .column
+    & > *
+      color: white !important
+
+// Navbar logo
+.navbar-item img
+  max-height: 3.5rem
+
+
+.cottage-info
+  height: 100%
+  display: flex
+  flex-direction: column
+  justify-content: center
+
+.messages
+  display: flex
+  justify-content: center
+.message
+  z-index: 100
+  position: fixed
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  margin-bottom: 4rem
+  width: 100%
+  max-width: 600px
+  text-align: center
+
+//Line-left
+.has-line-left
+  position: relative
+
+  &::after
+    content: ""
+    position: absolute
+    left: 0px
+    top: 50%
+    transform: translateY(-50%)
+    height: 80%
+    width: 3px
+    background-color: $primary
+    border-radius: 2px
+
+    @media screen and (max-width: 768px)
+      display: none
+
+
+// IsTransparent Button
+.button.is-transparent
+  background-color: transparent
+
+
+
+// Navbar
+
+
+.navbar
+  .navbar-brand
+
+    & .icon-text
+      display: flex
+      align-items: center
+
+      & .icon
+        font-size: 2.5rem
+        color: $primary
+
+  .navbar-end
+
+    & .icon.phone
+      font-size: 2.0rem
+      color: $primary
+
+    & hr
+      margin: .5rem 0
+
+// Homepage
+
+.homepage
+  background-color: $background-homepage
+
+.panel.is-background-white
+  background-color: white
+
+// Homepage Slider
+
+.glide
+  height: calc(100vh - 4.1rem)
+
+
+  &__slides
+    height: 100%
+    margin: 0 !important
+
+
+  &__slide
+    position: relative
+    &-image
+      height: 100%
+      background-position: center
+      background-size: cover
+      filter: brightness(0.6)
+
+    &-info
+      position: absolute
+      top: 50%
+      left: 50%
+      transform: translate(-50%, -50%)
+      opacity: 0
+      & > *
+        color: white !important
+
+    &--active
+      & .glide__slide-info
+        animation: .5s ease-in fade-top forwards
+
+  &__track
+    height: 100%
+
+@keyframes fade-top
+  0%
+    opacity: 0%
+    transform: translate(-50%, 100%)
+  100%
+    opacity: 1
+    transform: translate(-50%, -50%)
+
+
+// About page
+.hero
+  &.has-background
+    position: relative
+    overflow: hidden
+  &-background
+    position: absolute
+    object-fit: cover
+    object-position: center center
+    width: 100%
+    height: 100%
+  &-body
+    z-index: 1
+    & > *
+      color: white !important
+
+
+// Cottage page
+.cottage-images
+  & li
+
+    & a
+
+      & img
+        z-index: 1
+        position: absolute
+        object-fit: cover
+        object-position: center center
+        width: 100%
+        height: 100%
+
+.max-width
+  max-width: 600px
+  width: 100%
+
+.optional-price
+  color: inherit
+
+.is-checkradio[type="radio"] + label:first-of-type, .is-checkradio[type="checkbox"] + label:first-of-type
+  margin-left: .5rem
+
+.is-checkradio[type="checkbox"].is-vertical-aligned + label:before
+  top: 50% !important
+  transform: translateY(-50%) !important
+
+.is-checkradio[type="checkbox"].is-vertical-aligned + label:after
+  top: 50% !important
+  transform: translateY(-60%) rotate(45deg)!important
+
+
+// pagination
+.pagination-previous, .pagination-next, .pagination-link
+  background-color: white
+
+@media screen and (max-width: 768px)
+  .glide-mobile
+    max-height: 350px
+
+// Footer
+footer.footer
+  background-color: $grey-dark
+  color: white
+  & a
+    &:hover
+      color: $white
+
+  @media screen and (max-width: 768px)
+    text-align: center
+
+
+// Hover effects
+.hover-up
+  transition: .3s ease-in-out
+  &:hover
+    transform: translateY(-5px)
+
+.scale-up
+  transition: .3s ease-in-out
+  &:hover
+    transform: scale(1.05)
+
+// Scrollbar
+
+::-webkit-scrollbar
+ width: 13px
+ height: 13px
+
+::-webkit-scrollbar-thumb
+  background-color: $grey-light
+  border-radius: 10px
+  transition: .3s ease-in-out
+
+::-webkit-scrollbar-thumb:hover
+  background-color: lighten($grey-light, 5)
+
+::-webkit-scrollbar-track
+ background: #ffffff
+ border-radius: 10px
+ box-shadow: inset 7px 10px 12px #f0f0f0
+
+
+// Slider
+.price-slider
+  position: relative
+  display: inherit
+  z-index: 1
+  margin: 0 0 .5rem
+  height: 1.4rem
+
+  & > .track
+    position: absolute
+    z-index: 1
+    left: 0
+    right: 0
+    top: 50%
+    height: .5rem
+    transform: translateY(-50%)
+    border-radius: 5px
+    background-color: $grey-lighter
+
+  & > .range
+    position: absolute
+    z-index: 2
+    left: 25%
+    right: 25%
+    top: 50%
+    height: .65rem
+    transform: translateY(-50%)
+    border-radius: 5px
+    background-color: $grey-light
+
+  & > .thumb
+    position: absolute
+    z-index: 3
+    cursor: pointer
+    top: 50%
+    transform: translateY(-50%)
+    width: 1rem
+    height: 1rem
+    border: 1px solid #b5b5b5
+    border-radius: 4px
+    background: #fff
+
+
+
+    &.left
+      left: 25%
+      transform: translate(-50%, -10px)
+
+    &.right
+      right: 25%
+      transform: translate(-50%, -10px)
+
+.slider-multiple
+  & input[type=range]
+    position: absolute
+    pointer-events: none
+    z-index: 4
+    height: 10px
+    width: 100%
+    top: 50%
+    transform: translateY(-50%)
+    -webkit-appearance: none
+    background: transparent
+    &:focus
+        outline: none
+
+    &::-webkit-slider-thumb
+      pointer-events: all
+      cursor: pointer
+      width: 1rem
+      height: 1rem
+      width: 1rem
+      height: 1rem
+      border: 1px solid #b5b5b5
+      border-radius: 4px
+      background: #fff
+      -webkit-appearance: none
+      &:active
+        transform: scale(1.25)
+      &:focus
+        outline: none
+
+.outputs
+  display: flex
+  justify-content: space-between
+
+  & output
+    background: #4a4a4a
+    color: $white
+    padding: .2rem .3rem
+    border-radius: 4px
+    font-size: .75rem
+
+
+
+/**
+ * Extracted from: SweetAlert
+ * Modified by: Istiak Tridip
+ */
+.success-checkmark
+    width: 80px
+    height: 115px
+    margin: 0 auto
+
+    .check-icon
+        width: 80px
+        height: 80px
+        position: relative
+        border-radius: 50%
+        box-sizing: content-box
+        border: 4px solid #4CAF50
+
+        &::before
+            top: 3px
+            left: -2px
+            width: 30px
+            transform-origin: 100% 50%
+            border-radius: 100px 0 0 100px
+
+
+        &::after
+            top: 0
+            left: 30px
+            width: 60px
+            transform-origin: 0 50%
+            border-radius: 0 100px 100px 0
+            animation: rotate-circle 4.25s ease-in
+
+
+        &::before, &::after
+            content: ''
+            height: 100px
+            position: absolute
+            background: transparent
+            transform: rotate(-45deg)
+
+
+        .icon-line
+            height: 5px
+            background-color: #4CAF50
+            display: block
+            border-radius: 2px
+            position: absolute
+            z-index: 10
+
+            &.line-tip
+                top: 46px
+                left: 14px
+                width: 25px
+                transform: rotate(45deg)
+                animation: icon-line-tip 0.75s
+
+
+            &.line-long
+                top: 38px
+                right: 8px
+                width: 47px
+                transform: rotate(-45deg)
+                animation: icon-line-long 0.75s
+
+
+
+        .icon-circle
+            top: -4px
+            left: -4px
+            z-index: 10
+            width: 80px
+            height: 80px
+            border-radius: 50%
+            position: absolute
+            box-sizing: content-box
+            border: 4px solid rgba(76, 175, 80, .5)
+
+
+        .icon-fix
+            top: 8px
+            width: 5px
+            left: 26px
+            z-index: 1
+            height: 85px
+            position: absolute
+            transform: rotate(-45deg)
+            background-color: transparent
+
+
+
+
+@keyframes rotate-circle
+    0%
+        transform: rotate(-45deg)
+
+    5%
+        transform: rotate(-45deg)
+
+    12%
+        transform: rotate(-405deg)
+
+    100%
+        transform: rotate(-405deg)
+
+
+
+@keyframes icon-line-tip
+    0%
+        width: 0
+        left: 1px
+        top: 19px
+
+    54%
+        width: 0
+        left: 1px
+        top: 19px
+
+    70%
+        width: 50px
+        left: -8px
+        top: 37px
+
+    84%
+        width: 17px
+        left: 21px
+        top: 48px
+
+    100%
+        width: 25px
+        left: 14px
+        top: 45px
+
+
+
+@keyframes icon-line-long
+    0%
+        width: 0
+        right: 46px
+        top: 54px
+
+    65%
+        width: 0
+        right: 46px
+        top: 54px
+
+    84%
+        width: 55px
+        right: 0px
+        top: 35px
+
+    100%
+        width: 47px
+        right: 8px
+        top: 38px
+
+
