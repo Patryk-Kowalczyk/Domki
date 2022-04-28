@@ -1,121 +1,131 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+    <meta charset="UTF-8"/>
     <meta
-      name="viewport"
-      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+            name="viewport"
+            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
     />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
     <title>Domki: {% block title %} {% endblock %}</title>
     <script
-      src="https://kit.fontawesome.com/c2e4d434ca.js"
-      crossorigin="anonymous"
+            src="https://kit.fontawesome.com/c2e4d434ca.js"
+            crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="{% static 'bulma/css/style.css' %}" />
+    <link rel="stylesheet" href="{% static 'js/glowCookies.css' %}"/>
+    <script src="{% static 'js/glowCookies.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'bulma/css/style.css' %}"/>
     {% block head %}
     {% endblock %}
-  </head>
-  <body>
-    <nav class="navbar" role="navigation" aria-label="main navigation">
-      <div class="container">
+</head>
+<body>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
         <div class="navbar-brand">
-          <a class="navbar-item" href="{% url "index" %}">
-              <img src="{% static "img/logo.png" %}" alt="Domki letniskowe logo">
-          </a>
+            <a class="navbar-item" href="{% url "index" %}">
+                <img src="{% static "img/logo.png" %}" alt="Domki letniskowe logo">
+            </a>
 
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            data-target="navbarBasicExample"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
+            <a
+                    role="button"
+                    class="navbar-burger"
+                    aria-label="menu"
+                    aria-expanded="false"
+                    data-target="navbarBasicExample"
+            >
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
         </div>
 
         <div id="navbarBasicExample" class="navbar-menu">
-          <div class="navbar-end">
-            <a class="navbar-item" href="{% url "o-nas" %}"> O NAS </a>
-            <a class="navbar-item" href="{% url "co-robimy" %}">CO ROBIMY </a>
-            <a class="navbar-item" href="{% url "realizacje" %}"> REALIZACJE </a>
-            <a class="navbar-item" href="{% url "kontakt" %}"> KONTAKT </a>
-            <hr />
-            <div class="navbar-item">
+            <div class="navbar-end">
+                <a class="navbar-item" href="{% url "o-nas" %}"> O NAS </a>
+                <a class="navbar-item" href="{% url "co-robimy" %}">CO ROBIMY </a>
+                <a class="navbar-item" href="{% url "realizacje" %}"> REALIZACJE </a>
+                <a class="navbar-item" href="{% url "kontakt" %}"> KONTAKT </a>
+                <hr/>
+                <div class="navbar-item">
               <span class="icon-text is-flex is-align-items-center">
                 <span class="icon phone">
                   <i class="fas fa-mobile-alt"></i>
                 </span>
                 <div class="is-size-7">
-                  <a href="tel:+48123456789"><b>+48 123 456 789</b></a>
-                  <p>pon-pt: 9:00-18:00</p>
+                  <a href="tel:+48123456789"><b>+48 602-26-10-01</b></a>
+                  <p>pon-pt: 9:00-17:00</p>
                 </div>
               </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </nav>
-
-        {% block content %} {% endblock %}
-
-    <footer class="footer has-background-primary">
-        <div class="container">
-            <div class="columns">
-                <div class="column is-two-fifths">© 2022 Domki letniskowe <br> <span class="is-size-7">Wszelkie prawa zastrzeżone</span></div>
-                <div class="column columns">
-                    <div class="column">
-                        <h3 class="is-size-6 is-bold has-text-white">Adres</h3>
-                        <p class="is-size-7">ul. Andrzeja Struga 31 A</p>
-                        <p class="is-size-7">70-784 Szczecin</p>
-                    </div>
-                    <div class="column">
-                        <h3 class="is-size-6 is-bold has-text-white">Telefony kontaktowe</h3>
-                        <p class="is-size-7">Tel. <a href="tel: +48 602-26-10-01">+48 602-26-10-01</a></p>
-                        <p class="is-size-7">Tel. <a href="tel: +48 600-03-63-63">+48 600-03-63-63</a></p>
-                    </div>
-                    <div class="column">
-                        <h3 class="is-size-6 is-bold has-text-white">Biuro</h3>
-                        <p class="is-size-7">Poniedziałek - Piątek</p>
-                        <p class="is-italic is-size-7">w godz. 9:00 - 17:00</p>
-                        <p class="is-size-7">Sobota</p>
-                        <p class="is-size-7">w godz. 9:00 - 13:00</p>
-                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</nav>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
+{% block content %} {% endblock %}
+
+<footer class="footer has-background-primary">
+    <div class="container">
+        <div class="columns">
+            <div class="column is-two-fifths">
+                © 2022 Domki letniskowe <br>
+                <span class="is-size-7">Wszelkie prawa zastrzeżone</span><br>
+                         <a target="_blank" href="static/pdf/polityka_prywatnosci.pdf">Polityka prywatności</a><br>
+                <a target="_blank" href="static/pdf/polityka_cookies.pdf">Polityka cookies</a><br>
+            </div>
+            <div class="column columns">
+                <div class="column">
+                    <h3 class="is-size-6 is-bold has-text-white">Adres</h3>
+                    <p class="is-size-7">ul. Andrzeja Struga 31 A</p>
+                    <p class="is-size-7">70-784 Szczecin</p>
+                </div>
+                <div class="column">
+                    <h3 class="is-size-6 is-bold has-text-white">Telefony kontaktowe</h3>
+                    <p class="is-size-7">Tel. <a href="tel: +48 602-26-10-01">+48 602-26-10-01</a></p>
+                    <p class="is-size-7">Tel. <a href="tel: +48 600-03-63-63">+48 600-03-63-63</a></p>
+                </div>
+                <div class="column">
+                    <h3 class="is-size-6 is-bold has-text-white">Biuro</h3>
+                    <p class="is-size-7">Poniedziałek - Piątek</p>
+                    <p class="is-italic is-size-7">w godz. 9:00 - 17:00</p>
+                    <p class="is-size-7">Sobota</p>
+                    <p class="is-size-7">w godz. 9:00 - 13:00</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
         // Get all "navbar-burger" elements
         const $navbarBurgers = Array.prototype.slice.call(
-          document.querySelectorAll(".navbar-burger"),
-          0
+            document.querySelectorAll(".navbar-burger"),
+            0
         );
 
         // Check if there are any navbar burgers
         if ($navbarBurgers.length > 0) {
-          // Add a click event on each of them
-          $navbarBurgers.forEach((el) => {
-            el.addEventListener("click", () => {
-              // Get the target from the "data-target" attribute
-              const target = el.dataset.target;
-              const $target = document.getElementById(target);
+            // Add a click event on each of them
+            $navbarBurgers.forEach((el) => {
+                el.addEventListener("click", () => {
+                    // Get the target from the "data-target" attribute
+                    const target = el.dataset.target;
+                    const $target = document.getElementById(target);
 
-              // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-              el.classList.toggle("is-active");
-              $target.classList.toggle("is-active");
+                    // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+                    el.classList.toggle("is-active");
+                    $target.classList.toggle("is-active");
+                });
             });
-          });
         }
-      });
+    });
+</script>
+{% block javascript %}
+    <script>
+
     </script>
-  {% block javascript %}
-  {% endblock %}
-  </body>
+{% endblock %}
+</body>
 </html>

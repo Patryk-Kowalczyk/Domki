@@ -7,13 +7,17 @@ from .forms import ContactForm
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
 from django.contrib import messages
+import environ
+
+env = environ.Env()
 
 
 # Create your views here.
 
 def send_contact_mail(data, cottage=None):
     message = 'Otrzymano wiadomość od: {} \n'.format(data.get('first_name'))
-    if cottage:
+    print(data, cottage)
+    if isinstance(cottage,Cottage):
         message += 'Dotyczącą domku: {}\n'.format(cottage.name)
     else:
         'Z prośbą o kontakt\n'
@@ -25,7 +29,7 @@ def send_contact_mail(data, cottage=None):
         message += "O treści: \n"
         message += data.get('text')
         message += "\n"
-    if cottage:
+    if isinstance(cottage,Cottage):
         message += 'Dodatkowe opcje wybrane przy domku: \n'
         for item, value in data.items():
             if value == 'on':
@@ -35,10 +39,10 @@ def send_contact_mail(data, cottage=None):
     send_mail(
         "Nowa prośba o kontakt",
         message,
-        'ixe.007@gmail.com',
-        ['ixe.007@gmail.com'],
-        fail_silently=False,
+        data.get('contact_mail'),
+        [env('FORM_CONTACT_RECEIVER')]
     )
+
     return True
 
 

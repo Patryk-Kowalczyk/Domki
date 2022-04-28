@@ -30,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 DEBUG = env.bool('DEBUG')
 MYDEVIL = env.bool('MYDEVIL')
 
-ALLOWED_HOSTS = ['domki-hosting.usermd.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['domki-hosting.usermd.net', 'domydrewnianeszczecin.pl', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'bulma',
     'core',
     'tinymce',
-    'sorl.thumbnail',
+    'sorl.thumbnail'
 ]
 
 MIDDLEWARE = [
@@ -134,7 +134,11 @@ USE_L10N = True
 
 USE_TZ = True
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = env.str('EMAIL_HOST')
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = env.str('EMAIL_PORT')
 
 
 # Static files (CSS, JavaScript, Images)

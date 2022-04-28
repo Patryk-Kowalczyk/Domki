@@ -19,7 +19,7 @@
               <h2 class="is-size-1">Domki drewniane</h2>
               <p class="is-size-4">Budowane z pasją</p>
               <br>
-              <button class="button is-transparent is-large scale-up">Sprawdź</button>
+{#              <button class="button is-transparent is-large scale-up">Sprawdź</button>#}
           </div>
       </li>
       <li class="glide__slide">
@@ -34,7 +34,7 @@
               <h2 class="is-size-1">Promocje</h2>
               <p class="is-size-4">Na wybrane domki</p>
               <br>
-              <button class="button is-transparent is-large scale-up">Sprawdź</button>
+{#              <button class="button is-transparent is-large scale-up">Sprawdź</button>#}
           </div>
       </li>
     </ul>
@@ -221,6 +221,11 @@
     }
     </script>
     <script>
+    glowCookies.start('en', {
+  policyLink:   'static/pdf/polityka_cookies.pdf'
+});
+
+
     const inputLeft = document.getElementById('price-input-left');
     const inputRight = document.getElementById('price-input-right');
     const range = document.querySelector('.slider-multiple .range');
