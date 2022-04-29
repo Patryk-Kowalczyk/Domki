@@ -39,7 +39,7 @@ def send_contact_mail(data, cottage=None):
     send_mail(
         "Nowa prośba o kontakt",
         message,
-        data.get('contact_mail'),
+        env('EMAIL_HOST_USER'),
         [env('FORM_CONTACT_RECEIVER')]
     )
 
