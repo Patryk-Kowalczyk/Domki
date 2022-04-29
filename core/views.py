@@ -17,6 +17,7 @@ env = environ.Env()
 def send_contact_mail(data, cottage=None):
     message = 'Otrzymano wiadomość od: {} \n'.format(data.get('first_name'))
     print(data, cottage)
+
     if isinstance(cottage,Cottage):
         message += 'Dotyczącą domku: {}\n'.format(cottage.name)
     else:
@@ -32,9 +33,10 @@ def send_contact_mail(data, cottage=None):
     if isinstance(cottage,Cottage):
         message += 'Dodatkowe opcje wybrane przy domku: \n'
         for item, value in data.items():
-            if value == 'on':
+            if value == 'on' and item != 'consent1' and item != 'consent2':
                 service = cottage.optionalservice_set.get(name=item)
                 message += ' - ' + service.get_name_display() + f' ({service.price}zł)' + '\n'
+
         message += f'O szacowanej całkowitej wartości: {data["form-price"]}zł'
     send_mail(
         "Nowa prośba o kontakt",
